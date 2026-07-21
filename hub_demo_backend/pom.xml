@@ -25,7 +25,7 @@
         <tomcat.version>11.0.22</tomcat.version>
         <logback.version>1.5.35</logback.version>
         <mybatis-plus.version>3.5.16</mybatis-plus.version>
-        <postgresql.version>42.7.11</postgresql.version>
+        <postgresql.version>42.7.13</postgresql.version>
     </properties>
 
     <dependencies>
