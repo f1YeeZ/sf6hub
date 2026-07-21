@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build outputs
+dist/
+target/
+*.class
+output/
+screenshots/
+
+# Local runtime files
+uploads/
+video_draft/
+logs/
+*.log
+*.out.log
+*.err.log
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+application-local.yml
+
+# IDE and OS files
+.idea/
+.vscode/
+*.iml
+.classpath
+.project
+.settings/
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.pid
+hs_err_pid*

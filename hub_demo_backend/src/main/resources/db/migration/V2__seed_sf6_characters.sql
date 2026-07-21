@@ -1,0 +1,37 @@
+INSERT INTO characters (name, avatar, description, archetype, official_slug)
+VALUES
+    ('RYU', '', 'Street Fighter 6 official roster character.', '', 'ryu'),
+    ('LUKE', '', 'Street Fighter 6 official roster character.', '', 'luke'),
+    ('JAMIE', '', 'Street Fighter 6 official roster character.', '', 'jamie'),
+    ('CHUN-LI', '', 'Street Fighter 6 official roster character.', '', 'chunli'),
+    ('GUILE', '', 'Street Fighter 6 official roster character.', '', 'guile'),
+    ('KIMBERLY', '', 'Street Fighter 6 official roster character.', '', 'kimberly'),
+    ('JURI', '', 'Street Fighter 6 official roster character.', '', 'juri'),
+    ('KEN', '', 'Street Fighter 6 official roster character.', '', 'ken'),
+    ('BLANKA', '', 'Street Fighter 6 official roster character.', '', 'blanka'),
+    ('DHALSIM', '', 'Street Fighter 6 official roster character.', '', 'dhalsim'),
+    ('E.HONDA', '', 'Street Fighter 6 official roster character.', '', 'ehonda'),
+    ('DEE JAY', '', 'Street Fighter 6 official roster character.', '', 'deejay'),
+    ('MANON', '', 'Street Fighter 6 official roster character.', '', 'manon'),
+    ('MARISA', '', 'Street Fighter 6 official roster character.', '', 'marisa'),
+    ('JP', '', 'Street Fighter 6 official roster character.', '', 'jp'),
+    ('ZANGIEF', '', 'Street Fighter 6 official roster character.', '', 'zangief'),
+    ('LILY', '', 'Street Fighter 6 official roster character.', '', 'lily'),
+    ('CAMMY', '', 'Street Fighter 6 official roster character.', '', 'cammy'),
+    ('RASHID', '', 'Street Fighter 6 official roster character.', '', 'rashid'),
+    ('A.K.I.', '', 'Street Fighter 6 official roster character.', '', 'aki'),
+    ('ED', '', 'Street Fighter 6 official roster character.', '', 'ed'),
+    ('AKUMA', '', 'Street Fighter 6 official roster character.', '', 'gouki_akuma'),
+    ('M.BISON', '', 'Street Fighter 6 official roster character.', '', 'vega_mbison'),
+    ('TERRY', '', 'Street Fighter 6 official roster character.', '', 'terry'),
+    ('MAI', '', 'Street Fighter 6 official roster character.', '', 'mai'),
+    ('ELENA', '', 'Street Fighter 6 official roster character.', '', 'elena'),
+    ('SAGAT', '', 'Street Fighter 6 official roster character.', '', 'sagat'),
+    ('C.VIPER', '', 'Street Fighter 6 official roster character.', '', 'cviper'),
+    ('ALEX', '', 'Street Fighter 6 official roster character.', '', 'alex'),
+    ('INGRID', '', 'Street Fighter 6 official roster character.', '', 'ingrid')
+ON CONFLICT (name) DO UPDATE
+SET
+    official_slug = COALESCE(characters.official_slug, EXCLUDED.official_slug),
+    description = COALESCE(NULLIF(characters.description, ''), EXCLUDED.description),
+    archetype = COALESCE(characters.archetype, EXCLUDED.archetype);

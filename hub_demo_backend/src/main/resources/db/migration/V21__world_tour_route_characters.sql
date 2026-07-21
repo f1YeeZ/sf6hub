@@ -1,0 +1,2 @@
+ALTER TABLE combos
+    ADD COLUMN IF NOT EXISTS route_character_ids TEXT NOT NULL DEFAULT '';

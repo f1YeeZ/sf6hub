@@ -1,0 +1,99 @@
+server:
+  port: 8080
+  compression:
+    enabled: true
+    min-response-size: 1024
+    mime-types: application/json,text/html,text/plain,text/css,application/javascript
+  servlet:
+    context-path: /api
+
+spring:
+  config:
+    import: optional:file:.env.local[.properties],optional:file:hub_demo_backend/.env.local[.properties]
+  application:
+    name: hub-demo
+  datasource:
+    url: ${DB_URL:}
+    username: ${DB_USERNAME:}
+    password: ${DB_PASSWORD:}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-init-sql: SET client_encoding TO 'UTF8'
+      maximum-pool-size: ${DB_MAX_POOL_SIZE:10}
+  mail:
+    host: smtp.qq.com
+    port: 587
+    username: ${QQ_MAIL_USERNAME:}
+    password: ${QQ_MAIL_AUTH_CODE:}
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          ssl:
+            trust: smtp.qq.com
+  servlet:
+    multipart:
+      max-file-size: ${MAX_FILE_SIZE:100MB}
+      max-request-size: ${MAX_REQUEST_SIZE:100MB}
+  sql:
+    init:
+      mode: ${SQL_INIT_MODE:never}
+      encoding: UTF-8
+      continue-on-error: true
+  flyway:
+    enabled: ${FLYWAY_ENABLED:true}
+    baseline-on-migrate: ${FLYWAY_BASELINE_ON_MIGRATE:true}
+    locations: classpath:db/migration
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      id-type: auto
+
+app:
+  environment: ${APP_ENV:development}
+  jwt-secret: ${JWT_SECRET:}
+  upload-dir: ${UPLOAD_DIR:uploads}
+  upload-user-quota-bytes: ${UPLOAD_USER_QUOTA_BYTES:1073741824}
+  upload-orphan-retention-hours: ${UPLOAD_ORPHAN_RETENTION_HOURS:24}
+  upload-cleanup-cron: ${UPLOAD_CLEANUP_CRON:0 30 4 * * *}
+  storage:
+    provider: ${STORAGE_PROVIDER:local}
+    oss:
+      endpoint: ${OSS_ENDPOINT:}
+      bucket: ${OSS_BUCKET:}
+      access-key-id: ${OSS_ACCESS_KEY_ID:}
+      access-key-secret: ${OSS_ACCESS_KEY_SECRET:}
+      security-token: ${OSS_SECURITY_TOKEN:}
+      public-base-url: ${OSS_PUBLIC_BASE_URL:}
+  notification-retention-days: ${NOTIFICATION_RETENTION_DAYS:180}
+  notification-cleanup-cron: ${NOTIFICATION_CLEANUP_CRON:0 15 4 * * *}
+  analytics-ip-hash-secret: ${ANALYTICS_IP_HASH_SECRET:${app.jwt-secret}}
+  analytics-retention-days: ${ANALYTICS_RETENTION_DAYS:90}
+  analytics-cleanup-cron: ${ANALYTICS_CLEANUP_CRON:0 45 4 * * *}
+  public-base-url: ${PUBLIC_BASE_URL:}
+  cors:
+    allowed-origin-patterns: ${CORS_ALLOWED_ORIGIN_PATTERNS:}
+  proxy:
+    trusted-addresses: ${TRUSTED_PROXY_ADDRESSES:}
+  official-frame-sync:
+    enabled: ${OFFICIAL_FRAME_SYNC_ENABLED:false}
+    full-sync: ${OFFICIAL_FRAME_SYNC_FULL_SYNC:false}
+    cron: ${OFFICIAL_FRAME_SYNC_CRON:0 0 3 */7 * *}
+    request-delay-ms: ${OFFICIAL_FRAME_SYNC_REQUEST_DELAY_MS:2500}
+    base-url: ${OFFICIAL_FRAME_SYNC_BASE_URL:https://www.streetfighter.com/6/zh-hans/character}
+  mail:
+    from: ${QQ_MAIL_FROM:${spring.mail.username}}
+  verification-code:
+    ttl-minutes: ${VERIFICATION_CODE_TTL_MINUTES:10}
+    cooldown-seconds: ${VERIFICATION_CODE_COOLDOWN_SECONDS:60}
+  realtime:
+    max-public-connections: ${REALTIME_MAX_PUBLIC_CONNECTIONS:2000}
+    max-public-connections-per-client: ${REALTIME_MAX_PUBLIC_CONNECTIONS_PER_CLIENT:3}
+    heartbeat-ms: ${REALTIME_HEARTBEAT_MS:25000}

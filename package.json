@@ -1,0 +1,35 @@
+{
+  "name": "sf6-training-hub",
+  "version": "1.0.0",
+  "description": "Open-source full-stack training and combo community for Street Fighter 6",
+  "scripts": {
+    "test": "npm run test:backend && npm run test:frontend",
+    "build": "npm run build:backend && npm run build:frontend",
+    "verify": "npm run check:utf8 && npm test && npm run build",
+    "test:backend": "cd hub_demo_backend && mvn test",
+    "test:frontend": "cd hub_demo_frontend && npm test",
+    "build:backend": "cd hub_demo_backend && mvn package -DskipTests",
+    "build:frontend": "cd hub_demo_frontend && npm run build",
+    "check:utf8": "node scripts/check-utf8.mjs",
+    "audit:backend": "node scripts/audit-maven-osv.mjs",
+    "verify:beta": "npm run verify",
+    "verify:release": "npm run verify:beta && npm run check:beta-env",
+    "check:beta-env": "node scripts/check-beta-env.mjs",
+    "preflight:beta": "node scripts/beta-preflight.mjs"
+  },
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/f1YeeZ/sf6hub.git"
+  },
+  "bugs": {
+    "url": "https://github.com/f1YeeZ/sf6hub/issues"
+  },
+  "homepage": "https://github.com/f1YeeZ/sf6hub#readme",
+  "engines": {
+    "node": ">=22",
+    "npm": ">=10"
+  },
+  "dependencies": {}
+}

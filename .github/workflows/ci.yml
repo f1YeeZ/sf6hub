@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: hub_demo_ci
+          POSTGRES_USER: hub_demo
+          POSTGRES_PASSWORD: ci-only-password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U hub_demo -d hub_demo_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      FLYWAY_URL: jdbc:postgresql://localhost:5432/hub_demo_ci
+      FLYWAY_USER: hub_demo
+      FLYWAY_PASSWORD: ci-only-password
+
+    steps:
+      - uses: actions/checkout@v4.2.2
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-java@v4.7.1
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - uses: actions/setup-node@v4.4.0
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: hub_demo_frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        run: npm ci --prefix hub_demo_frontend
+
+      - name: Verify database migrations
+        working-directory: hub_demo_backend
+        run: mvn --batch-mode flyway:migrate flyway:validate
+
+      - name: Test and build
+        run: npm run verify:beta
+
+      - name: Audit production frontend dependencies
+        working-directory: hub_demo_frontend
+        run: npm audit --omit=dev --audit-level=high --registry=https://registry.npmjs.org
+
+      - name: Audit backend dependencies with OSV
+        run: npm run audit:backend
