@@ -33,7 +33,7 @@ jobs:
       FLYWAY_PASSWORD: ci-only-password
 
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
 
